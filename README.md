@@ -1,8 +1,12 @@
-Anana
-=====
+Ananaphone
+==========
 The least ergonomic MIDI keyboard ever invented.
 
+Touch the metal bits to play sounds! The LEDs pulse and react to your actions.
+
 ;wip: GIF of it working
+
+;wip: youtube video of it working
 
 ![Back view](img/back.jpg)
 ![Front view](img/front.jpg)
@@ -39,3 +43,23 @@ The amplifier board has 6 inputs (power, ground, and 4 signal lines that are con
 ![Lights setup](img/light.jpg)
 
 Kneading the hot glue as it's cooling reulted in a nice "organic" effect that also made it diffuse light better. I love hot glue. The lights are wound around various parts of the gardening wire structure.
+
+Software
+--------
+
+The Arduino is running a pretty short sketch that simply sends touch data (retrieved using the excellent [Adafruit MPR121 library](https://github.com/adafruit/Adafruit_MPR121_Library)) to the computer over serial, and controls the LED brightnesses. The sketch source code can be found under the `arduino/Touch` directory.
+
+The touch data is sent as strings of base-10 numbers, one per line, such that, when converted into a 12-bit binary number, each binary digit represents the touch state of one of the 12 channels (the least significant bit represents channel 0, and the most significant bit represents channel 11). For example, a line containing `7` means that channel 0, 1, and 2 have detected touches, and no others. Touch data is sent when one or more untouched channels are touched, or one or more touched channels are no longer touched.
+
+On the computer side, there's a few Python scripts that interface with the Arduino using [PySerial](http://pyserial.sourceforge.net/):
+
+* `anana-samples.py` uses [PyGame](http://www.pygame.org/hifi.html) to play WAV samples in `sounds/` when any of the channels are touched.
+* `anana-midi.py` uses [PyGame](http://www.pygame.org/hifi.html) to send MIDI messages, which can then be interpreted by software such as [LMMS](https://lmms.io/) or [Ableton Live](https://www.ableton.com/).
+
+To use these scripts:
+
+1. Make sure you have the dependencies (Python 3.4+, PySerial 2.7+ and PyGame 1.9+) - on Debian/Ubuntu, these can be installed simply by running `setup.sh`.
+2. It may be necessary to configure the scripts. For example, the `SERIAL_PORT` and the `MIDI_OUTPUT` variables will often depend on your system configuration. The `SERIAL_PORT` variable should be a string like `COM5` (for Windows) or `/dev/ttyACM0` (for POSIX), and the MIDI_OUTPUT variable should be a non-negative integer representing the MIDI output device index to use.
+3. Plug in the Arduino.
+4. Wait for the LED bulbs to come on, then start one of the `anana-*.py` scripts.
+5. Touch the metal bits!

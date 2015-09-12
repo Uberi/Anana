@@ -31,7 +31,9 @@ def off(index): sounds[index].fadeout(1000)
 
 previous_state = 0
 while True:
-    state = int(port.readline().decode("utf-8").strip("\r\n"))
+    line = port.readline().decode("utf-8")
+    try: state = int(line.strip("\r\n"))
+    except ValueError: continue # ignore bad lines
     for i in range(CHANNEL_COUNT):
         if (state >> i) & 1 != (previous_state >> i) & 1:
             print(state)

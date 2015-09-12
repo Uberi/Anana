@@ -6,36 +6,39 @@ import serial
 import pygame.midi
 
 """
-Glockenspiel
-Music Box
-Pipe Organ
-Voice Oohs
-French Horns
-Synth Brass 1
-Whistle
-Fantasia
-Crystal
-Fiddle
-JP Strings
-Org Bell
-Melted Choir
-MC-500 Beep
+My favourite MIDI programs for Anana:
+
+* Glockenspiel
+* Music Box
+* Pipe Organ
+* Voice Oohs
+* French Horns
+* Synth Brass 1
+* Whistle
+* Fantasia
+* Crystal
+* Fiddle
+* JP Strings
+* Org Bell
+* Melted Choir
+* MC-500 Beep
 """
 
 NOTES = [31, 36, 38, 39, 60, 61, 62, 63, 64, 65, 66, 67] # MIDI note numbers for each channel
-NOTES = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59] # MIDI note numbers for each channel
-NOTES = [62, 64, 66, 67, 69, 71, 72, 74, 56, 57, 58, 59] # MIDI note numbers for each channel
-SERIAL_PORT = "/dev/ttyACM0"
-CHANNEL_COUNT = 12
+SERIAL_PORT = "/dev/ttyACM0" # path to the serial port used by the Arduino
+MIDI_OUTPUT = 0 # index of the MIDI output device to use
+CHANNEL_COUNT = 12 # number of capacitive touch channels
 
 port = serial.Serial(SERIAL_PORT, 9600)
 
 try:
     pygame.midi.init()
-    player = pygame.midi.Output(0)
+    player = pygame.midi.Output(MIDI_OUTPUT)
     previous_state = 0
     while True:
-        state = int(port.readline().decode("utf-8").strip("\r\n"))
+        line = port.readline().decode("utf-8")
+        try: state = int(line.strip("\r\n"))
+        except ValueError: continue # ignore bad lines
         for i in range(CHANNEL_COUNT):
             if (state >> i) & 1 != (previous_state >> i) & 1:
                 print(state)

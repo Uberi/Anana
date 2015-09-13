@@ -4,11 +4,12 @@ The least ergonomic MIDI keyboard ever invented.
 
 Touch the metal bits to play sounds! The LEDs pulse and react to your actions.
 
-;wip: GIF of it working
+![Animated demo](img/demo.gif)
 
-;wip: youtube video of it working
+# [VIDEO DEMO](https://www.youtube.com/watch?v=Nx6oU0oYaCI)
 
 ![Back view](img/back.jpg)
+
 ![Front view](img/front.jpg)
 
 Physical Setup
@@ -18,7 +19,7 @@ The base is a piece of Delrin about 10cm by 20cm - I used about half of an old c
 
 ![Bottom view](img/bottom.jpg)
 
-I started off by drilling 3/32" holes (that's 2.38mm in real units) where the wire should stick up, then for each hole, drilling another one 1.5cm away from it. The gardening wire was threaded through each hole, then bent back through the corresponding hole spaced 1.5cm away, using locking pliers. Bending it back in on itself, the gardening wire is securely attached to the base. Afterward, the gardening wire was bent and twisted until it was no longer ergonomic.
+I started off by drilling 3/32" holes (that's 2.38mm in real units) where the wire should stick up, then for each hole, drilling another one 1.5cm away from it. The gardening wire was threaded through each hole, then bent back through the corresponding hole spaced 1.5cm away, using locking pliers. Bending it back in on itself, the gardening wire is securely attached to the base. Afterward, the gardening wire was bent and twisted until it was no longer ergonomic. I glued a transparent plastic sheet to the bottom of the whole thing to prevent the gardening wires from shorting together if placed on a conductive surface.
 
 The gardening wire is electrically connected using alligator clips crimped to 22AWG copper wire:
 
